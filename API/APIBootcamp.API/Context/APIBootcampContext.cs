@@ -7,7 +7,8 @@ namespace APIBootcamp.API.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-OHO9G30\\SQLEXPRESS;initial Catalog=YummyBootcampDB;integrated Security=True;");
+            //optionsBuilder.UseSqlServer("Data Source=DESKTOP-OHO9G30\\SQLEXPRESS;initial Catalog=YummyBootcampDB;integrated Security=True;");
+            optionsBuilder.UseSqlServer("Data Source=CAN-TOKHAY-MASA\\CANTOKHAY;initial Catalog=YummyBootcampDB;integrated Security=True;");
         }
 
         public DbSet<Category> Categories { get; set; }
