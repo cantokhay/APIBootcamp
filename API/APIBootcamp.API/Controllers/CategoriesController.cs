@@ -28,16 +28,18 @@ namespace APIBootcamp.API.Controllers
         {
             _context.Categories.Add(entity);
             _context.SaveChanges();
-            return Ok("Category created succesfully!");
+            return Ok("Created Succesfully!");
         }
 
         [HttpDelete]
         public IActionResult DeleteCategory(int id)
         {
             var entityToDelete = _context.Categories.Find(id);
-            _context.Categories.Remove(entityToDelete);
+            entityToDelete.DataStatus = Entities.Enum.DataStatus.Deleted;
+            entityToDelete.DeletedDate = DateTime.Now;
+            entityToDelete.ModifiedDate = DateTime.Now;
             _context.SaveChanges();
-            return Ok("Category deleted succesfully!");
+            return Ok("Deleted Succesfully");
         }
 
         [HttpGet("GetCategoryById")]
@@ -52,7 +54,7 @@ namespace APIBootcamp.API.Controllers
         {
             _context.Categories.Update(entity);
             _context.SaveChanges();
-            return Ok("Category updated succesfully!");
+            return Ok("Updated Succesfully!");
         }
     }
 }

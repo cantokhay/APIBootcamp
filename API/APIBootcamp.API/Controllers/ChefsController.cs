@@ -28,16 +28,18 @@ namespace APIBootcamp.API.Controllers
         {
             _context.Chefs.Add(entity);
             _context.SaveChanges();
-            return Ok("Chef created succesfully!");
+            return Ok("Created Succesfully!");
         }
 
         [HttpDelete]
         public IActionResult DeleteChef(int id)
         {
             var entityToDelete = _context.Chefs.Find(id);
-            _context.Chefs.Remove(entityToDelete);
+            entityToDelete.DataStatus = Entities.Enum.DataStatus.Deleted;
+            entityToDelete.DeletedDate = DateTime.Now;
+            entityToDelete.ModifiedDate = DateTime.Now;
             _context.SaveChanges();
-            return Ok("Chef deleted succesfully!");
+            return Ok("Deleted Succesfully");
         }
 
         [HttpGet("GetChefById")]
@@ -52,7 +54,7 @@ namespace APIBootcamp.API.Controllers
         {
             _context.Chefs.Update(entity);
             _context.SaveChanges();
-            return Ok("Chef updated succesfully!");
+            return Ok("Updated Succesfully!");
         }
     }
 }
