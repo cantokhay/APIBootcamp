@@ -1,4 +1,7 @@
 using APIBootcamp.API.Context;
+using APIBootcamp.API.Entities.Concrete;
+using APIBootcamp.API.ValidationRules;
+using FluentValidation;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<APIBootcampContext>();
+builder.Services.AddScoped<IValidator<Product>, ProductValidator>();
 builder.Services.AddAutoMapper(System.Reflection.Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllers();
