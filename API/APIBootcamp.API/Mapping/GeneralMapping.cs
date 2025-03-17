@@ -3,6 +3,7 @@ using APIBootcamp.API.DTOs.ContactDTOs;
 using APIBootcamp.API.DTOs.MessageDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
+using APIBootcamp.API.DTOs.ProductDTOs;
 
 namespace APIBootcamp.API.Mapping
 {
@@ -24,6 +25,9 @@ namespace APIBootcamp.API.Mapping
             CreateMap<Contact, CreateContactDTO>().ReverseMap();
             CreateMap<Contact, UpdateContactDTO>().ReverseMap();
             CreateMap<Contact, GetByIdContactDTO>().ReverseMap();
+
+            CreateMap<Product, ResultProductWithCategoryDTO>().ForMember(x => x.CategoryName, y => y.MapFrom(z => z.Category.CategoryName)).ReverseMap();
+            CreateMap<Product, CreateProductDTO>().ReverseMap();
 
         }
     }

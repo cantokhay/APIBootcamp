@@ -16,7 +16,7 @@ namespace APIBootcamp.API.Entities.Concrete
         public DateTime? DeletedDate { get; set; }
 
         public int? CategoryId { get; set; }
-        public Category Categories { get; set; }
+        public Category Category { get; set; }
     }
 }
 

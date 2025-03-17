@@ -1,6 +1,6 @@
 ﻿namespace APIBootcamp.API.DTOs.ProductDTOs
 {
-    public class ResultPRoductDTO
+    public class ResultProductDTO
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
