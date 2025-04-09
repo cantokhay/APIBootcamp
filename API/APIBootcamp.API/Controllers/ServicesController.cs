@@ -7,38 +7,38 @@ namespace APIBootcamp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class ServicesController : ControllerBase
     {
         private readonly APIBootcampContext _context;
 
-        public CategoriesController(APIBootcampContext context)
+        public ServicesController(APIBootcampContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public IActionResult CategoryList()
+        public IActionResult ServiceList()
         {
-            var entitiesList = _context.Categories.ToList();
+            var entitiesList = _context.Services.ToList();
             return Ok(entitiesList);
         }
 
         [HttpPost]
-        public IActionResult CreateCategory(Category entity)
+        public IActionResult CreateService(Service entity)
         {
             entity.CreatedDate = DateTime.Now;
             entity.DataStatus = Entities.Enum.DataStatus.Created;
             entity.ModifiedDate = null;
             entity.DeletedDate = null;
-            _context.Categories.Add(entity);
+            _context.Services.Add(entity);
             _context.SaveChanges();
             return Ok("Created Succesfully!");
         }
 
         [HttpDelete]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteService(int id)
         {
-            var entityToDelete = _context.Categories.Find(id);
+            var entityToDelete = _context.Services.Find(id);
             entityToDelete.DataStatus = Entities.Enum.DataStatus.Deleted;
             entityToDelete.DeletedDate = DateTime.Now;
             entityToDelete.ModifiedDate = DateTime.Now;
@@ -46,19 +46,19 @@ namespace APIBootcamp.API.Controllers
             return Ok("Deleted Succesfully");
         }
 
-        [HttpGet("GetCategoryById")]
-        public IActionResult GetCategoryById(int id)
+        [HttpGet("GetServiceById")]
+        public IActionResult GetServiceById(int id)
         {
-            var entity = _context.Categories.Find(id);
+            var entity = _context.Services.Find(id);
             return Ok(entity);
         }
 
         [HttpPut]
-        public IActionResult UpdateCategory(Category entity)
+        public IActionResult UpdateService(Service entity)
         {
             entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
-            _context.Categories.Update(entity);
+            _context.Services.Update(entity);
             _context.SaveChanges();
             return Ok("Updated Succesfully!");
         }

@@ -39,6 +39,10 @@ namespace APIBootcamp.API.Controllers
             }
             else
             {
+                entity.CreatedDate = DateTime.Now;
+                entity.DataStatus = Entities.Enum.DataStatus.Created;
+                entity.ModifiedDate = null;
+                entity.DeletedDate = null;
                 _context.Products.Add(entity);
                 _context.SaveChanges();
                 return Ok(new { message = "Ürün ekleme başarılı", data = entity }); //best of the best practice
@@ -73,6 +77,8 @@ namespace APIBootcamp.API.Controllers
             }
             else
             {
+                entity.DataStatus = Entities.Enum.DataStatus.Modified;
+                entity.ModifiedDate = DateTime.Now;
                 _context.Products.Update(entity);
                 _context.SaveChanges();
                 return Ok(new { message = "Ürün güncelleme başarılı", data = entity });

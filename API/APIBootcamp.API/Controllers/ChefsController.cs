@@ -26,6 +26,10 @@ namespace APIBootcamp.API.Controllers
         [HttpPost]
         public IActionResult CreateChef(Chef entity)
         {
+            entity.CreatedDate = DateTime.Now;
+            entity.DataStatus = Entities.Enum.DataStatus.Created;
+            entity.ModifiedDate = null;
+            entity.DeletedDate = null;
             _context.Chefs.Add(entity);
             _context.SaveChanges();
             return Ok("Created Succesfully!");
@@ -52,6 +56,8 @@ namespace APIBootcamp.API.Controllers
         [HttpPut]
         public IActionResult UpdateChef(Chef entity)
         {
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
+            entity.ModifiedDate = DateTime.Now;
             _context.Chefs.Update(entity);
             _context.SaveChanges();
             return Ok("Updated Succesfully!");
