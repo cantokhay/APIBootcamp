@@ -1,43 +1,44 @@
 ﻿using APIBootcamp.API.Context;
 using APIBootcamp.API.Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIBootcamp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestimonialsController : ControllerBase
+    public class YummyEventsController : ControllerBase
     {
         private readonly APIBootcampContext _context;
 
-        public TestimonialsController(APIBootcampContext context)
+        public YummyEventsController(APIBootcampContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public IActionResult TestimonialList()
+        public IActionResult YummyEventList()
         {
-            var entitiesList = _context.Testimonials.ToList();
+            var entitiesList = _context.YummyEvents.ToList();
             return Ok(entitiesList);
         }
 
         [HttpPost]
-        public IActionResult CreateTestimonial(Testimonial entity)
+        public IActionResult CreateYummyEvent(YummyEvent entity)
         {
             entity.CreatedDate = DateTime.Now;
             entity.DataStatus = Entities.Enum.DataStatus.Created;
             entity.ModifiedDate = null;
             entity.DeletedDate = null;
-            _context.Testimonials.Add(entity);
+            _context.YummyEvents.Add(entity);
             _context.SaveChanges();
             return Ok("Created Succesfully!");
         }
 
         [HttpDelete]
-        public IActionResult DeleteTestimonial(int id)
+        public IActionResult DeleteYummyEvent(int id)
         {
-            var entityToDelete = _context.Testimonials.Find(id);
+            var entityToDelete = _context.YummyEvents.Find(id);
             entityToDelete.DataStatus = Entities.Enum.DataStatus.Deleted;
             entityToDelete.DeletedDate = DateTime.Now;
             entityToDelete.ModifiedDate = DateTime.Now;
@@ -45,19 +46,19 @@ namespace APIBootcamp.API.Controllers
             return Ok("Deleted Succesfully");
         }
 
-        [HttpGet("GetTestimonialById")]
-        public IActionResult GetTestimonialById(int id)
+        [HttpGet("GetYummyEventById")]
+        public IActionResult GetYummyEventById(int id)
         {
-            var entity = _context.Testimonials.Find(id);
+            var entity = _context.YummyEvents.Find(id);
             return Ok(entity);
         }
 
         [HttpPut]
-        public IActionResult UpdateTestimonial(Testimonial entity)
+        public IActionResult UpdateYummyEvent(YummyEvent entity)
         {
             entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
-            _context.Testimonials.Update(entity);
+            _context.YummyEvents.Update(entity);
             _context.SaveChanges();
             return Ok("Updated Succesfully!");
         }

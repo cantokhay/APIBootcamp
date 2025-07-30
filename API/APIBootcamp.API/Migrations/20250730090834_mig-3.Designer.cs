@@ -4,6 +4,7 @@ using APIBootcamp.API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIBootcamp.API.Migrations
 {
     [DbContext(typeof(APIBootcampContext))]
-    partial class APIBootcampContextModelSnapshot : ModelSnapshot
+    [Migration("20250730090834_mig-3")]
+    partial class mig3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -441,23 +443,14 @@ namespace APIBootcamp.API.Migrations
 
             modelBuilder.Entity("APIBootcamp.API.Entities.Concrete.YummyEvent", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("YummyEventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YummyEventId"), 1L, 1);
 
                     b.Property<int>("DataStatus")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("YummyEventDescription")
                         .IsRequired()
@@ -470,14 +463,11 @@ namespace APIBootcamp.API.Migrations
                     b.Property<decimal>("YummyEventPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("YummyEventStatus")
-                        .HasColumnType("bit");
-
                     b.Property<string>("YummyEventTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("YummyEventId");
 
                     b.ToTable("YummyEvents");
                 });
