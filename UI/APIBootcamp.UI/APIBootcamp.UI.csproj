@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\AdminLayout\Components\" />
     <Folder Include="Views\Default\Components\Default\" />
   </ItemGroup>
 

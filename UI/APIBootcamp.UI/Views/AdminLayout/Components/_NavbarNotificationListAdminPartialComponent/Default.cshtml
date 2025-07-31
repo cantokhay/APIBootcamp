@@ -1,0 +1,59 @@
+﻿@model List<ResultUnReadNotificationDTO>
+
+
+<li class="dropdown dropdown-list-toggle">
+    <a href="#" data-toggle="dropdown"
+       class="nav-link notification-toggle nav-link-lg">
+        <i data-feather="bell" class="bell"></i>
+    </a>
+    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+        <div class="dropdown-header">
+            @Model.Count Notifications Unread
+            <div class="float-right">
+                <a href="#">Mark All As Read</a>
+            </div>
+        </div>
+        <div class="dropdown-list-content dropdown-list-icons">
+            @foreach (var notification in Model)
+            {
+                <a href="#" class="dropdown-item dropdown-item-unread">
+                    <span class="dropdown-item-icon bg-primary text-white">
+                        <i class="@notification.NotificationIconURL"></i>
+                    </span> <span class="dropdown-item-desc"> @notification.NotificationDescription <span class="time">
+                            @{
+                                var timeSpan = DateTime.Now - notification.CreatedDate;
+                                var minutesAgo = (int)timeSpan.TotalMinutes;
+                                var hoursAgo = (int)timeSpan.TotalHours;
+                                var daysAgo = (int)timeSpan.TotalDays;
+                                var monthsAgo = (int)(timeSpan.TotalDays / 30);
+                            }
+                            @if (minutesAgo < 60)
+                            {
+                                @($"{minutesAgo} minutes ago")
+                            }
+                            else if (hoursAgo < 24)
+                            {
+                                @($"{hoursAgo} hours ago")
+                            }
+                            else if (daysAgo < 30)
+                            {
+                                @($"{daysAgo} days ago")
+                            }
+                            else if (monthsAgo < 12)
+                            {
+                                @($"{monthsAgo} months ago")
+                            }
+                            else
+                            {
+                                @($"{notification.CreatedDate:dd MMM, yyyy}")
+                            }
+                        </span>
+                    </span>
+                </a>
+            }
+        </div>
+        <div class="dropdown-footer text-center">
+            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+</li>

@@ -71,5 +71,47 @@ namespace APIBootcamp.API.Controllers
             var entity = _context.Messages.Find(id);
             return Ok(_mapper.Map<ResultMessageDTO>(entity));
         }
+
+        [HttpGet("GetMessageByMessageStatusUnRead")]
+        public IActionResult GetMessageByMessageStatusUnRead()
+        {
+            var entities = _context.Messages.Where(x => x.MessageStatus == Entities.Enum.MessageStatus.UnRead).ToList();
+            return Ok(_mapper.Map<List<ResultMessageDTO>>(entities));
+        }
+
+        [HttpGet("GetMessageByMessageStatusRead")]
+        public IActionResult GetMessageByMessageStatusRead()
+        {
+            var entities = _context.Messages.Where(x => x.MessageStatus == Entities.Enum.MessageStatus.Read).ToList();
+            return Ok(_mapper.Map<List<ResultMessageDTO>>(entities));
+        }
+
+        [HttpPut("ChangeMessageStatusReadById")]
+        public IActionResult ChangeMessageStatusReadById(int id)
+        {
+            var entity = _context.Messages.Find(id);
+            if (entity == null)
+            {
+                return NotFound("Message not found");
+            }
+            entity.MessageStatus = Entities.Enum.MessageStatus.Read;
+            entity.ModifiedDate = DateTime.Now;
+            _context.SaveChanges();
+            return Ok("Message status changed to Read");
+        }
+        
+        [HttpPut("ChangeMessageStatusUnReadById")]
+        public IActionResult ChangeMessageStatusUnReadById(int id)
+        {
+            var entity = _context.Messages.Find(id);
+            if (entity == null)
+            {
+                return NotFound("Message not found");
+            }
+            entity.MessageStatus = Entities.Enum.MessageStatus.UnRead;
+            entity.ModifiedDate = DateTime.Now;
+            _context.SaveChanges();
+            return Ok("Message status changed to UnRead");
+        }
     }
 }

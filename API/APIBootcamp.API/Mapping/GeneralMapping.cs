@@ -1,9 +1,10 @@
-﻿using APIBootcamp.API.DTOs.FeatureDTOs;
-using APIBootcamp.API.DTOs.ContactDTOs;
+﻿using APIBootcamp.API.DTOs.ContactDTOs;
+using APIBootcamp.API.DTOs.FeatureDTOs;
 using APIBootcamp.API.DTOs.MessageDTOs;
+using APIBootcamp.API.DTOs.NotificationDTOs;
+using APIBootcamp.API.DTOs.ProductDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
-using APIBootcamp.API.DTOs.ProductDTOs;
 
 namespace APIBootcamp.API.Mapping
 {
@@ -20,6 +21,11 @@ namespace APIBootcamp.API.Mapping
             CreateMap<Message, CreateMessageDTO>().ReverseMap();
             CreateMap<Message, UpdateMessageDTO>().ReverseMap();
             CreateMap<Message, GetByIdMessageDTO>().ReverseMap();
+
+            CreateMap<Notification, ResultNotificationDTO>().ReverseMap();
+            CreateMap<Notification, CreateNotificationDTO>().ReverseMap();
+            CreateMap<Notification, UpdateNotificationDTO>().ReverseMap();
+            CreateMap<Notification, GetByIdNotificationDTO>().ReverseMap();
 
             CreateMap<Contact, ResultContactDTO>().ReverseMap();
             CreateMap<Contact, CreateContactDTO>().ReverseMap();
