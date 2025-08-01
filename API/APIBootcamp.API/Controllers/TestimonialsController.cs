@@ -18,7 +18,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult TestimonialList()
         {
-            var entitiesList = _context.Testimonials.ToList();
+            var entitiesList = _context.Testimonials.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(entitiesList);
         }
 

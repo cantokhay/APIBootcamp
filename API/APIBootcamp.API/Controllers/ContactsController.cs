@@ -20,11 +20,11 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult ContactList()
         {
-            return Ok(_context.Contacts.ToList());
+            return Ok(_context.Contacts.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList());
         }
 
         [HttpPost]
-        public IActionResult CreateContact([FromBody] CreateContactDTO createContactDTO)
+        public IActionResult CreateContact(CreateContactDTO createContactDTO)
         {
             var entity = new Contact
             {

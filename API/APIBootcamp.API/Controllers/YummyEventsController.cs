@@ -19,7 +19,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult YummyEventList()
         {
-            var entitiesList = _context.YummyEvents.ToList();
+            var entitiesList = _context.YummyEvents.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(entitiesList);
         }
 

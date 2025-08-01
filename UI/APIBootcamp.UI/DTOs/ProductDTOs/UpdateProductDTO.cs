@@ -1,4 +1,4 @@
-﻿namespace APIBootcamp.API.DTOs.ProductDTOs
+﻿namespace APIBootcamp.UI.DTOs.ProductDTOs
 {
     public class UpdateProductDTO
     {
@@ -9,7 +9,7 @@
         public string ProductImageURL { get; set; }
         public DateTime CreatedDate { get; set; }
 
-
         public int CategoryId { get; set; }
+        //public string CategoryName { get; set; }
     }
 }

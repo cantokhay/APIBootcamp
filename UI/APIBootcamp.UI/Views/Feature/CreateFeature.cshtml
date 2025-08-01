@@ -1,0 +1,39 @@
+﻿@model CreateFeatureDTO
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Create Feature</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Feature Title</label>
+                            <input type="text" asp-for="FeatureTitle" class="form-control" />
+                            <br />
+                            <label>Feature Sub Title</label>
+                            <input type="text" asp-for="FeatureSubTitle" class="form-control" />
+                            <br />
+                            <label>Feature Description</label>
+                            <input type="text" asp-for="FeatureDescription" class="form-control" />
+                            <br />
+                            <label>Feature VideoURL</label>
+                            <input type="text" asp-for="FeatureVideoURL" class="form-control" />
+                            <br />
+                            <label>Feature ImageURL</label>
+                            <input type="text" asp-for="FeatureImageURL" class="form-control" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Create New One</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

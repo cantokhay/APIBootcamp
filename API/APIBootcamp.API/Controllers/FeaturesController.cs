@@ -22,7 +22,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult FeatureList()
         {
-            var entitiesList = _context.Features.ToList();
+            var entitiesList = _context.Features.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(_mapper.Map<List<ResultFeatureDTO>>(entitiesList));
         }
 

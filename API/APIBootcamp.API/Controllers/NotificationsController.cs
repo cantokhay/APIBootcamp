@@ -23,7 +23,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult NotificationList()
         {
-            var entitiesList = _context.Notifications.ToList();
+            var entitiesList = _context.Notifications.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(_mapper.Map<List<ResultNotificationDTO>>(entitiesList));
         }
 

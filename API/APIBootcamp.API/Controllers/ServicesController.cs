@@ -19,7 +19,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult ServiceList()
         {
-            var entitiesList = _context.Services.ToList();
+            var entitiesList = _context.Services.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(entitiesList);
         }
 

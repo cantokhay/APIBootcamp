@@ -26,7 +26,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult ProductList()
         {
-            return Ok(_context.Products.ToList());
+            return Ok(_context.Products.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList());
         }
 
         [HttpPost]
@@ -68,8 +68,9 @@ namespace APIBootcamp.API.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProduct(Product entity)
+        public IActionResult UpdateProduct(UpdateProductDTO updateProductDTO)
         {
+            var entity = _mapper.Map<Product>(updateProductDTO);
             var validationResult = _validator.Validate(entity);
             if (!validationResult.IsValid)
             {
@@ -96,6 +97,10 @@ namespace APIBootcamp.API.Controllers
             }
             else
             {
+                entity.CreatedDate = DateTime.Now;
+                entity.DataStatus = Entities.Enum.DataStatus.Created;
+                entity.ModifiedDate = null;
+                entity.DeletedDate = null;
                 _context.Products.Add(entity);
                 _context.SaveChanges();
                 return Ok(new { message = "Ürün ekleme başarılı", data = entity });
@@ -105,7 +110,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet("ProductListWithCategory")]
         public IActionResult ProductListWithCategory()
         {
-            var valueList = _context.Products.Include(x => x.Category).ToList();
+            var valueList = _context.Products.Include(x => x.Category).Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(_mapper.Map<List<ResultProductWithCategoryDTO>>(valueList));
         }
     }

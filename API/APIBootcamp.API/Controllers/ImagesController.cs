@@ -19,7 +19,7 @@ namespace APIBootcamp.API.Controllers
         [HttpGet]
         public IActionResult ImageList()
         {
-            var entitiesList = _context.Images.ToList();
+            var entitiesList = _context.Images.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
             return Ok(entitiesList);
         }
 
