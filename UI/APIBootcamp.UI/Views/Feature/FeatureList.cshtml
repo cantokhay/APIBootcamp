@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "FeatureList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
-    var i = 0;
+    int startIndex = 0;
     int length = 3;
 }
 
@@ -18,12 +18,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Feature Title</th>
-                                    <th scope="col">Feature Subtitle</th>
-                                    <th scope="col">Feature Description</th>
-                                    <th scope="col">Feature VideoURL</th>
-                                    <th scope="col">Feature ImageURL</th>
+                                    <th scope="col">Subtitle</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">VideoURL</th>
+                                    <th scope="col">ImageURL</th>
                                     <th scope="col">Delete</th>
                                     <th scope="col">Update</th>
                                 </tr>
@@ -32,14 +31,12 @@
 
                                 @foreach (var item in Model)
                                 {
-                                    i++;
                                     <tr>
-                                        <th scope="row">@i</th>
                                         <td>@item.FeatureTitle</td>
                                         <td>@item.FeatureSubTitle</td>
                                         <td>@item.FeatureDescription</td>
-                                        <td>@item.FeatureVideoURL.Substring(i, length)...</td>
-                                        <td>@item.FeatureImageURL.Substring(i, length)...</td>
+                                        <td>@item.FeatureVideoURL.Substring(startIndex, length)...</td>
+                                        <td>@item.FeatureImageURL.Substring(startIndex, length)...</td>
                                         <td><a href="/Feature/DeleteFeature/@item.Id" class="btn btn-danger">Delete</a></td>
                                         <td><a href="/Feature/UpdateFeature/@item.Id" class="btn btn-warning">Update</a></td>
                                     </tr>

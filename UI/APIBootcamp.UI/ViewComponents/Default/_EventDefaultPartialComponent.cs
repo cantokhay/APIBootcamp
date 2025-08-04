@@ -19,7 +19,7 @@ namespace APIBootcamp.UI.ViewComponents.Default
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultEventDTO>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultYummyEventDTO>>(jsonData);
                 return View(values);
             }
             return View();

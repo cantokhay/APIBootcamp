@@ -1,0 +1,63 @@
+﻿@model List<ResultAboutDTO>
+@{
+    ViewData["Title"] = "AboutList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int startIndex = 0;
+    int length = 20;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>About List</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">About Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Image URL</th>
+                                    <th scope="col">Video URL</th>
+                                    <th scope="col">Vİdeo Cover URL</th>
+                                    <th scope="col">Reservation Phone Number</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.AboutTitle</td>
+                                        <td>@item.AboutDescription.Substring(startIndex, length)...</td>
+                                        <td>@item.AboutImageURL.Substring(startIndex, length)...</td>
+                                        <td>@item.AboutVideoURL.Substring(startIndex, length)...</td>
+                                        <td>@item.AboutVideoCoverImageURL.Substring(startIndex, length)...</td>
+                                        <td>@item.AboutReservationPhoneNUmber</td>
+                                        <td><a href="/About/DeleteAbout/@item.Id" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="/About/UpdateAbout/@item.Id" class="btn btn-warning">Update</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        @if (Model.Count >= 1)
+                        {
+                            <a href="#" class="btn btn-info">Can not add more than 1 About</a>
+                        }
+                        else
+                        {
+                            <a href="/About/CreateAbout/" class="btn btn-success">Add New One</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

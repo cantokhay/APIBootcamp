@@ -1,0 +1,36 @@
+﻿@model CreateChefDTO
+@{
+    ViewData["Title"] = "CreateChef";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Create Chef</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Chef Title</label>
+                            <input type="text" asp-for="ChefFullName" class="form-control" />
+                            <br />
+                            <label>Description</label>
+                            <input type="text" asp-for="ChefTitle" class="form-control" />
+                            <br />
+                            <label>Comment</label>
+                            <input type="text" asp-for="ChefComment" class="form-control" />
+                            <br />
+                            <label>Image URL</label>
+                            <input type="text" asp-for="ChefImageURL" class="form-control" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Create New One</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

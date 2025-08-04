@@ -1,6 +1,6 @@
-﻿@model UpdateFeatureDTO
+﻿@model UpdateYummyEventDTO
 @{
-    ViewData["Title"] = "UpdateFeature";
+    ViewData["Title"] = "UpdateYummyEvent";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -10,26 +10,26 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Update Feature</h4>
+                        <h4>Update Event</h4>
                     </div>
                     <div class="card-body">
                         <form method="post">
                             <input type="hidden" asp-for="Id" />
                             <input type="hidden" asp-for="CreatedDate" />
-                            <label>Feature Title</label>
-                            <input type="text" asp-for="FeatureTitle" class="form-control" />
-                            <br />
-                            <label>Sub Title</label>
-                            <input type="text" asp-for="FeatureSubTitle" class="form-control" />
+                            <label>Event Title</label>
+                            <input type="text" asp-for="YummyEventTitle" class="form-control" />
                             <br />
                             <label>Description</label>
-                            <input type="text" asp-for="FeatureDescription" class="form-control" />
+                            <input type="text" asp-for="YummyEventDescription" class="form-control" />
                             <br />
-                            <label>VideoURL</label>
-                            <input type="text" asp-for="FeatureVideoURL" class="form-control" />
+                            <label>Image URL</label>
+                            <input type="text" asp-for="YummyEventImageURL" class="form-control" />
                             <br />
-                            <label>ImageURL</label>
-                            <input type="text" asp-for="FeatureImageURL" class="form-control" />
+                            <label>Price</label>
+                            <input type="text" asp-for="YummyEventPrice" class="form-control" />
+                            <br />
+                            <label>Status</label>
+                            <input type="text" disabled asp-for="YummyEventStatus" class="form-control" />
                             <br />
                             <button type="submit" class="btn btn-success">Update</button>
                         </form>
@@ -39,3 +39,4 @@
         </div>
     </div>
 </section>
+

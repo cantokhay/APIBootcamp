@@ -1,9 +1,11 @@
-﻿using APIBootcamp.API.DTOs.CategoryDTOs;
+﻿using APIBootcamp.API.DTOs.AboutDTOs;
+using APIBootcamp.API.DTOs.CategoryDTOs;
 using APIBootcamp.API.DTOs.ContactDTOs;
 using APIBootcamp.API.DTOs.FeatureDTOs;
 using APIBootcamp.API.DTOs.MessageDTOs;
 using APIBootcamp.API.DTOs.NotificationDTOs;
 using APIBootcamp.API.DTOs.ProductDTOs;
+using APIBootcamp.API.DTOs.YummyEventDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
 
@@ -43,6 +45,15 @@ namespace APIBootcamp.API.Mapping
             CreateMap<Category, CreateCategoryDTO>().ReverseMap();
             CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
             CreateMap<Category, GetByIdCategoryDTO>().ReverseMap();
+
+            CreateMap<About, ResultAboutDTO>().ReverseMap();
+            CreateMap<About, CreateAboutDTO>().ReverseMap();
+            CreateMap<About, UpdateAboutDTO>().ReverseMap();
+            CreateMap<About, GetByIdAboutDTO>().ReverseMap();
+
+            CreateMap<YummyEvent, ResultYummyEventDTO>().ReverseMap();
+            CreateMap<YummyEvent, CreateYummyEventDTO>().ReverseMap();
+            CreateMap<YummyEvent, UpdateYummyEventDTO>().ReverseMap();
 
         }
     }

@@ -1,0 +1,42 @@
+﻿@model CreateAboutDTO
+@{
+    ViewData["Title"] = "CreateAbout";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Create About</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>About Title</label>
+                            <input type="text" asp-for="AboutTitle" class="form-control" />
+                            <br />
+                            <label>Description</label>
+                            <input type="text" asp-for="AboutDescription" class="form-control" />
+                            <br />
+                            <label>Image URL</label>
+                            <input type="text" asp-for="AboutImageURL" class="form-control" />
+                            <br />
+                            <label>Video URL</label>
+                            <input type="text" asp-for="AboutVideoURL" class="form-control" />
+                            <br />
+                            <label>Video Cover Image URL</label>
+                            <input type="text" asp-for="AboutVideoCoverImageURL" class="form-control" />
+                            <br />
+                            <label>Reservation Phone Number</label>
+                            <input type="text" asp-for="AboutReservationPhoneNUmber" class="form-control" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Create New One</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

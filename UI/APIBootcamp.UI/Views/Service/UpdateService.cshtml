@@ -1,6 +1,6 @@
-﻿@model UpdateFeatureDTO
+﻿@model UpdateServiceDTO
 @{
-    ViewData["Title"] = "UpdateFeature";
+    ViewData["Title"] = "UpdateService";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -10,26 +10,20 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Update Feature</h4>
+                        <h4>Update Service</h4>
                     </div>
                     <div class="card-body">
                         <form method="post">
                             <input type="hidden" asp-for="Id" />
                             <input type="hidden" asp-for="CreatedDate" />
-                            <label>Feature Title</label>
-                            <input type="text" asp-for="FeatureTitle" class="form-control" />
-                            <br />
-                            <label>Sub Title</label>
-                            <input type="text" asp-for="FeatureSubTitle" class="form-control" />
+                            <label>Service Title</label>
+                            <input type="text" asp-for="ServiceTitle" class="form-control" />
                             <br />
                             <label>Description</label>
-                            <input type="text" asp-for="FeatureDescription" class="form-control" />
+                            <input type="text" asp-for="ServiceDescription" class="form-control" />
                             <br />
                             <label>VideoURL</label>
-                            <input type="text" asp-for="FeatureVideoURL" class="form-control" />
-                            <br />
-                            <label>ImageURL</label>
-                            <input type="text" asp-for="FeatureImageURL" class="form-control" />
+                            <input type="text" asp-for="ServiceIconURL" class="form-control" />
                             <br />
                             <button type="submit" class="btn btn-success">Update</button>
                         </form>

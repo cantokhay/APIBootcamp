@@ -1,0 +1,67 @@
+﻿@model List<ResultYummyEventDTO>
+
+@{
+    ViewData["Title"] = "YummyEventList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int i = 0;
+    int startIndex = 0;
+    int length = 5;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Event List</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Event Title</th>
+                                    <th scope="col">Descripton</th>
+                                    <th scope="col">Image URL</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Change Status</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.YummyEventTitle</td>
+                                        <td>@item.YummyEventDescription.Substring(startIndex, length)...</td>
+                                        <td>@item.YummyEventImageURL.Substring(startIndex, length)...</td>
+                                        <td>@item.YummyEventPrice</td>
+                                        <td>@(item.YummyEventStatus ? "Active" : "Passive")</td>
+                                        <td>
+                                            <a href="/YummyEvent/@(item.YummyEventStatus ? "ChangeEventStatusFromTrueToFalse" : "ChangeEventStatusFromFalseToTrue")/@item.Id"
+                                               class=" btn @(item.YummyEventStatus ? "btn-info" : "btn-dark")">
+                                                    @(item.YummyEventStatus ? "Set Passive" : "Set Active")
+                                                </a>
+                                        </td>
+                                        <td><a href="/YummyEvent/DeleteYummyEvent/@item.Id" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="/YummyEvent/UpdateYummyEvent/@item.Id" class="btn btn-warning">Update</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <a href="/YummyEvent/CreateYummyEvent/" class="btn btn-success">Add New One</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
