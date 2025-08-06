@@ -42,14 +42,15 @@
                 }
             </script>
             <div class="swiper-wrapper align-items-center">
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-1.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-2.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-3.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-4.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-5.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-6.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-7.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>
-                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="/yummy-red-1.0.0/assets/img/gallery/gallery-8.jpg"><img src="/yummy-red-1.0.0/assets/img/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>
+
+                @foreach (var item in Model)
+                {
+                    <div class="swiper-slide">
+                        <a class="glightbox" data-gallery="images-gallery" href="@item.ImageURL">
+                            <img src="@item.ImageURL" class="img-fluid" alt="@item.ImageAlt">
+                        </a>
+                    </div>
+                }
             </div>
             <div class="swiper-pagination"></div>
         </div>

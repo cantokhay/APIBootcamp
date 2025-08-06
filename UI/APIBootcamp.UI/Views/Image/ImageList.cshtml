@@ -2,50 +2,65 @@
 @{
     ViewData["Title"] = "ImageList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
-    int i = 0;
-    int startIndex = 0;
-    int length = 5;
+    var i = 0;
 }
 
 <section class="section">
     <div class="section-body">
         <div class="row">
-            <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Image List</h4>
-                    </div>
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Image Alt Info</th>
-                                    <th scope="col">Image URL</th>
-                                    <th scope="col">Delete</th>
-                                    <th scope="col">Update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach (var item in Model)
-                                {
-                                    i++;
-                                    <tr>
-                                        <td>@i</td>
-                                        <td>@item.ImageAlt</td>
-                                        <td>@item.ImageURL.Substring(startIndex, length)...</td>
-                                        <td><a href="/Image/DeleteImage/@item.Id" class="btn btn-danger">Delete</a></td>
-                                        <td><a href="/Image/UpdateImage/@item.Id" class="btn btn-warning">Update</a></td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
                         <a href="/Image/CreateImage/" class="btn btn-success">Add New One</a>
+                        <div class="bootstrap snippet">
+                            <section id="portfolio" class="gray-bg padding-top-bottom">
+                                <!--==== Portfolio Filters ====-->
+                                <div class="categories">
+                                    <ul>
+                                        <li class="active">
+                                            <a href="#" data-filter="*">All Categories</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-filter=".web-design">Web Design</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-filter=".apps">Apps</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-filter=".psd">PSD</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- ======= Portfolio items ===-->
+                                <div class="projects-container scrollimation in">
+                                    <div class="row">
+                                        @foreach (var item in Model)
+                                        {
+                                            i++;
+                                            <article class="col-md-3 col-sm-6 portfolio-item @item.ImageAlt">
+                                                <div class="portfolio-thumb in">
+                                                    <a href="#" class="main-link">
+                                                        <img class="img-responsive img-center" src="@item.ImageURL" alt="@item.ImageAlt">
+                                                        <span class="project-title">Titel @i</span>
+                                                        <span class="overlay-mask"></span>
+                                                    </a>
+                                                    <a class="enlarge cboxElement" href="/Image/UpdateImage/@item.Id" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a class="link" href="/Image/DeleteImage/@item.Id">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </article>
+                                        }
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+

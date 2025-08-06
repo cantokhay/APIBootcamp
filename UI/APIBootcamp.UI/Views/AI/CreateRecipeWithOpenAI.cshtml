@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "CreateRecipeWithOpenAI";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Create Recipe by OpenAI</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Ingredients and keywords</label>
+                            <input type="text" name="prompt" class="form-control" />
+                            <br />
+
+                            <button type="submit" class="btn btn-success">Create a Suggestion</button>
+                        </form>
+                        <br /><br />
+                        @if(ViewBag.Recipe != null)
+                        {
+                            <div class="alert alert-success">
+                                <strong>Recipe Suggestion:</strong>
+                                <p>@ViewBag.Recipe</p>
+                            </div>
+                        }
+                        else if(ViewBag.ErrorMessage != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Error:</strong>
+                                <p>@ViewBag.ErrorMessage</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

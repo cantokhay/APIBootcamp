@@ -1,0 +1,84 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Net.Http.Headers;
+using System.Text;
+
+namespace APIBootcamp.UI.Controllers
+{
+    public class AIController : Controller
+    {
+        public IActionResult CreateRecipeWithOpenAI()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRecipeWithOpenAI(string prompt)
+        {
+            var prePrompt = "Create a recipe for a dish that includes the following ingredients: ";
+            var client = new HttpClient();
+            var chatRequest = new ChatRequest
+            {
+                WebAccess = false,
+                Messages = new List<Message>
+                {
+                    new Message
+                    {
+                        Role = "user",
+                        Content = prePrompt + prompt
+                    }
+                }
+            };
+
+            var json = System.Text.Json.JsonSerializer.Serialize(chatRequest);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/gpt4o"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "56eeaae0a2msh1f5a78362b65e64p1c49efjsn933601bf2799" },
+                    { "x-rapidapi-host", "chatgpt-42.p.rapidapi.com" },
+                },
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var result = System.Text.Json.JsonSerializer.Deserialize<ReturnViewModel>(responseBody);
+                if (result != null)
+                {
+                    ViewBag.Recipe = result.Result;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Failed to retrieve recipe. Please try again.";
+                }
+            }
+
+            return View();
+        }
+
+
+        public class ReturnViewModel
+        {
+            public string Result { get; set; }
+            //public bool Status { get; set; }
+        }
+        public class ChatRequest
+        {
+            public List<Message> Messages { get; set; }
+
+            public bool WebAccess { get; set; }
+        }
+
+        public class Message
+        {
+            public string Role { get; set; }
+            public string Content { get; set; }
+        }
+    }
+}
