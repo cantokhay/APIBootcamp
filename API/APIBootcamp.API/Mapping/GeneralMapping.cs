@@ -2,9 +2,11 @@
 using APIBootcamp.API.DTOs.CategoryDTOs;
 using APIBootcamp.API.DTOs.ContactDTOs;
 using APIBootcamp.API.DTOs.FeatureDTOs;
+using APIBootcamp.API.DTOs.ImageDTOs;
 using APIBootcamp.API.DTOs.MessageDTOs;
 using APIBootcamp.API.DTOs.NotificationDTOs;
 using APIBootcamp.API.DTOs.ProductDTOs;
+using APIBootcamp.API.DTOs.ReservationDTOs;
 using APIBootcamp.API.DTOs.YummyEventDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
@@ -35,7 +37,10 @@ namespace APIBootcamp.API.Mapping
             CreateMap<Contact, UpdateContactDTO>().ReverseMap();
             CreateMap<Contact, GetByIdContactDTO>().ReverseMap();
 
-            CreateMap<Product, ResultProductWithCategoryDTO>().ForMember(x => x.CategoryName, y => y.MapFrom(z => z.Category.CategoryName)).ReverseMap();
+            CreateMap<Product, ResultProductWithCategoryDTO>()
+                .ForMember(x => x.CategoryName, y => y.MapFrom(z => z.Category.CategoryName))
+                .ReverseMap();
+
             CreateMap<Product, CreateProductDTO>().ReverseMap();
             CreateMap<Product, UpdateProductDTO>().ReverseMap();
             CreateMap<Product, ResultProductDTO>().ReverseMap();
@@ -54,6 +59,15 @@ namespace APIBootcamp.API.Mapping
             CreateMap<YummyEvent, ResultYummyEventDTO>().ReverseMap();
             CreateMap<YummyEvent, CreateYummyEventDTO>().ReverseMap();
             CreateMap<YummyEvent, UpdateYummyEventDTO>().ReverseMap();
+
+            CreateMap<Reservation, ResultReservationDTO>().ReverseMap();
+            CreateMap<Reservation, CreateReservationDTO>().ReverseMap();
+            CreateMap<Reservation, UpdateReservationDTO>().ReverseMap();
+
+            CreateMap<Image, ResultImageDTO>().ReverseMap();
+            CreateMap<Image, CreateImageDTO>().ReverseMap();
+            CreateMap<Image, UpdateImageDTO>().ReverseMap();
+
 
         }
     }

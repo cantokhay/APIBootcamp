@@ -1,0 +1,70 @@
+﻿@model UpdateReservationDTO
+@{
+    ViewData["Title"] = "UpdateReservation";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    ReservationStatus status = Model.ReservationStatus;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Update Reservation</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="CreatedDate" />
+                            <label>Reservation Full Name</label>
+                            <input type="text" asp-for="ReservationFullName" class="form-control" />
+                            <br />
+                            <label>Email</label>
+                            <input type="text" asp-for="ReservationEmail" class="form-control" />
+                            <br />
+                            <label>Phone Number</label>
+                            <input type="text" asp-for="ReservationPhoneNumber" class="form-control" />
+                            <br />
+                            <label>Date</label>
+                            <input type="text" asp-for="ReservationDate" class="form-control" placeholder="dd-MM-yyyy" />
+                            <br />
+                            <label>Hour</label>
+                            <input type="text" asp-for="ReservationHour" class="form-control" placeholder="HH:MM" />
+                            <br />
+                            <label>People Count</label>
+                            <input type="text" asp-for="ReservationPeopleCount" class="form-control" />
+                            <br />
+                            <label>Message</label>
+                            <input type="text" asp-for="ReservationMessage" class="form-control" />
+                            <br />
+                            <a href="@Url.Action("ChangeReservationStatusToPending", "Reservation", new { id = Model.Id })"
+                               class="btn btn-warning @(status == ReservationStatus.Pending ? "disabled" : "")"
+                               @(status == ReservationStatus.Pending ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Pending
+                            </a>
+                            <a href="@Url.Action("ChangeReservationStatusToApproved", "Reservation", new { id = Model.Id })"
+                               class="btn btn-success @(status == ReservationStatus.Approved ? "disabled" : "")"
+                               @(status == ReservationStatus.Approved ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Approved
+                            </a>
+                            <a href="@Url.Action("ChangeReservationStatusToCancelled", "Reservation", new { id = Model.Id })"
+                               class="btn btn-danger @(status == ReservationStatus.Rejected ? "disabled" : "")"
+                               @(status == ReservationStatus.Rejected ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Cancelled
+                            </a>
+                            <a href="@Url.Action("ChangeReservationStatusToCompleted", "Reservation", new { id = Model.Id })"
+                               class="btn btn-info @(status == ReservationStatus.Completed ? "disabled" : "")"
+                               @(status == ReservationStatus.Completed ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Completed
+                            </a>
+                            <br />
+                            <br />
+                            <button type="submit" class="btn btn-lg btn-success">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

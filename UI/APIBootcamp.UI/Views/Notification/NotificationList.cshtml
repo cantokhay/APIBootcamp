@@ -1,0 +1,62 @@
+﻿@model List<ResultNotificationDTO>
+@{
+    ViewData["Title"] = "NotificationList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int i = 0;
+    int startIndex = 0;
+    int length = 5;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Notification List</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Notification Descripton</th>
+                                    <th scope="col">Icon URL</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Change Status</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.NotificationDescription.Substring(startIndex, length)...</td>
+                                        <td>@item.NotificationIconURL.Substring(startIndex, length)...</td>
+                                        <td>@(item.NotificationIsRead ? "Read" : "Unread")</td>
+                                        <td>
+                                            <a href="/Notification/@(item.NotificationIsRead ? "ChangeNotificationIsReadStatusFromTrueToFalse" : "ChangeNotificationIsReadStatusFromFalseToTrue")/@item.Id"
+                                               class=" btn @(item.NotificationIsRead ? "btn-info" : "btn-dark")">
+                                                @(item.NotificationIsRead ? "Set Unread" : "Set Read")
+                                            </a>
+                                        </td>
+                                        <td><a href="/Notification/DeleteNotification/@item.Id" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="/Notification/UpdateNotification/@item.Id" class="btn btn-warning">Update</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <a href="/Notification/CreateNotification/" class="btn btn-success">Add New One</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

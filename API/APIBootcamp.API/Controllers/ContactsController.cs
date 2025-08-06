@@ -1,6 +1,7 @@
 ﻿using APIBootcamp.API.Context;
 using APIBootcamp.API.DTOs.ContactDTOs;
 using APIBootcamp.API.Entities.Concrete;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,37 +11,33 @@ namespace APIBootcamp.API.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly APIBootcampContext _context;
 
-        public ContactsController(APIBootcampContext context)
+        public ContactsController(APIBootcampContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult ContactList()
         {
-            return Ok(_context.Contacts.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList());
+            var entitiesList = _context.Contacts.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
+            return Ok(_mapper.Map<List<ResultContactDTO>>(entitiesList));
         }
 
         [HttpPost]
         public IActionResult CreateContact(CreateContactDTO createContactDTO)
         {
-            var entity = new Contact
-            {
-                ContactMapLocation = createContactDTO.ContactMapLocation,
-                ContactAddress = createContactDTO.ContactAddress,
-                ContactPhoneNumber = createContactDTO.ContactPhoneNumber,
-                ContactEmail = createContactDTO.ContactEmail,
-                ContactOpenHours = createContactDTO.ContactOpenHours,
-                CreatedDate = DateTime.Now,
-                DataStatus = Entities.Enum.DataStatus.Created,
-                ModifiedDate = null,
-                DeletedDate = null
-            };
+            var entity = _mapper.Map<Contact>(createContactDTO);
+            entity.CreatedDate = DateTime.Now;
+            entity.DataStatus = Entities.Enum.DataStatus.Created;
+            entity.ModifiedDate = null;
+            entity.DeletedDate = null;
             _context.Contacts.Add(entity);
             _context.SaveChanges();
-            return Ok("Created Succesfully");
+            return Ok("Created Succesfully!");
         }
 
         [HttpDelete]
@@ -58,24 +55,18 @@ namespace APIBootcamp.API.Controllers
         public IActionResult GetContactById(int id)
         {
             var entity = _context.Contacts.Find(id);
-            return Ok(entity);
+            return Ok(_mapper.Map<ResultContactDTO>(entity));
         }
 
         [HttpPut]
         public IActionResult UpdateContact(UpdateContactDTO updateContactDTO)
         {
-            Contact entityToUpdate = new Contact();
-            entityToUpdate.Id = updateContactDTO.Id;
-            entityToUpdate.ContactEmail = updateContactDTO.ContactEmail;
-            entityToUpdate.ContactAddress = updateContactDTO.ContactAddress;
-            entityToUpdate.ContactMapLocation = updateContactDTO.ContactMapLocation;
-            entityToUpdate.ContactOpenHours = updateContactDTO.ContactOpenHours;
-            entityToUpdate.ContactPhoneNumber = updateContactDTO.ContactPhoneNumber;
-            entityToUpdate.ModifiedDate = DateTime.Now;
-            entityToUpdate.DataStatus = Entities.Enum.DataStatus.Modified;
-            _context.Contacts.Update(entityToUpdate);
+            var entity = _mapper.Map<Contact>(updateContactDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
+            entity.ModifiedDate = DateTime.Now;
+            _context.Contacts.Update(entity);
             _context.SaveChanges();
-            return Ok("Updated Succesfully");
+            return Ok("Updated Succesfully!");
         }
     }
 }

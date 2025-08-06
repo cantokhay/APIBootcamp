@@ -1,0 +1,32 @@
+﻿@model UpdateImageDTO
+@{
+    ViewData["Title"] = "UpdateImage";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Update Event</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="CreatedDate" />
+                            <label>Image Alt Info</label>
+                            <input type="text" asp-for="ImageAlt" class="form-control" />
+                            <br />
+                            <label>Image URL</label>
+                            <input type="text" asp-for="ImageURL" class="form-control" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

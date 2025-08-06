@@ -1,0 +1,71 @@
+﻿@model List<ResultMessageDTO>
+@{
+    ViewData["Title"] = "MessageList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int i = 0;
+    int startIndex = 0;
+    int length = 3;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Message List</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Message Full Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Sent Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.MessageFullName</td>
+                                        <td>@item.MessageEmail</td>
+                                        <td>@item.MessageSubject</td>
+                                        <td>@item.MessageDetails.Substring(startIndex, length)...</td>
+                                        <td>@item.SentDate.ToString("dd-MM-yyyy")</td>
+                                        <td>
+                                            @{
+                                                string statusText = item.MessageStatus switch
+                                                {
+                                                    MessageStatus.Read => "Read",
+                                                    MessageStatus.UnRead => "Unread",
+                                                    MessageStatus.Failed => "Failed",
+                                                    _ => "Unknown"
+                                                };
+                                            }
+                                            @statusText
+                                        </td>
+                                        <td><a href="/Message/DeleteMessage/@item.Id" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="/Message/UpdateMessage/@item.Id" class="btn btn-warning">Update</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <a href="/Message/CreateMessage/" class="btn btn-success">Add New One</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

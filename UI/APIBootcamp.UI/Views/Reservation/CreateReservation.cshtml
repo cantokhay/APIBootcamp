@@ -1,0 +1,46 @@
+﻿@model CreateReservationDTO
+@{
+    ViewData["Title"] = "CreateReservation";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Create Reservation</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Reservation Full Name</label>
+                            <input type="text" asp-for="ReservationFullName" class="form-control" />
+                            <br />
+                            <label>Email</label>
+                            <input type="text" asp-for="ReservationEmail" class="form-control" />
+                            <br />
+                            <label>Phone Number</label>
+                            <input type="text" asp-for="ReservationPhoneNumber" class="form-control" />
+                            <br />
+                            <label>Date</label>
+                            <input type="text" asp-for="ReservationDate" class="form-control" placeholder="dd-MM-yyyy" />
+                            <br />
+                            <label>Hour</label>
+                            <input type="text" asp-for="ReservationHour" class="form-control" placeholder="HH:MM" />
+                            <br />
+                            <label>People Count</label>
+                            <input type="text" asp-for="ReservationPeopleCount" class="form-control" />
+                            <br />
+                            <label>Message</label>
+                            <input type="text" asp-for="ReservationMessage" class="form-control" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Create New One</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,4 +1,5 @@
 using APIBootcamp.API.Context;
+using APIBootcamp.API.Converters;
 using APIBootcamp.API.Entities.Concrete;
 using APIBootcamp.API.ValidationRules;
 using FluentValidation;
@@ -13,6 +14,11 @@ builder.Services.AddScoped<IValidator<Product>, ProductValidator>();
 builder.Services.AddAutoMapper(System.Reflection.Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

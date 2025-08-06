@@ -2,7 +2,6 @@
 using APIBootcamp.API.DTOs.MessageDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIBootcamp.API.Controllers
@@ -33,6 +32,7 @@ namespace APIBootcamp.API.Controllers
             var entity = _mapper.Map<Message>(createMessageDTO);
             entity.MessageStatus = Entities.Enum.MessageStatus.UnRead;
             entity.CreatedDate = DateTime.Now;
+            entity.SentDate = DateTime.Now;
             entity.DataStatus = Entities.Enum.DataStatus.Created;
             entity.ModifiedDate = null;
             entity.DeletedDate = null;
@@ -86,32 +86,40 @@ namespace APIBootcamp.API.Controllers
             return Ok(_mapper.Map<List<ResultMessageDTO>>(entities));
         }
 
-        [HttpPut("ChangeMessageStatusReadById")]
-        public IActionResult ChangeMessageStatusReadById(int id)
+        [HttpPut("ChangeMessageStatusRead")]
+        public IActionResult ChangeMessageStatusRead(UpdateMessageDTO updateMessageDTO)
         {
-            var entity = _context.Messages.Find(id);
-            if (entity == null)
-            {
-                return NotFound("Message not found");
-            }
-            entity.MessageStatus = Entities.Enum.MessageStatus.Read;
+            var entity = _mapper.Map<Message>(updateMessageDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
+            entity.MessageStatus = Entities.Enum.MessageStatus.Read;
+            _context.Messages.Update(entity);
             _context.SaveChanges();
-            return Ok("Message status changed to Read");
+            return Ok("Updated Succesfully!");
         }
         
-        [HttpPut("ChangeMessageStatusUnReadById")]
-        public IActionResult ChangeMessageStatusUnReadById(int id)
+        [HttpPut("ChangeMessageStatusUnRead")]
+        public IActionResult ChangeMessageStatusUnRead(UpdateMessageDTO updateMessageDTO)
         {
-            var entity = _context.Messages.Find(id);
-            if (entity == null)
-            {
-                return NotFound("Message not found");
-            }
-            entity.MessageStatus = Entities.Enum.MessageStatus.UnRead;
+            var entity = _mapper.Map<Message>(updateMessageDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
+            entity.MessageStatus = Entities.Enum.MessageStatus.UnRead;
+            _context.Messages.Update(entity);
             _context.SaveChanges();
-            return Ok("Message status changed to UnRead");
+            return Ok("Updated Succesfully!");
+        }
+        
+        [HttpPut("ChangeMessageStatusFailed")]
+        public IActionResult ChangeMessageStatusFailed(UpdateMessageDTO updateMessageDTO)
+        {
+            var entity = _mapper.Map<Message>(updateMessageDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
+            entity.ModifiedDate = DateTime.Now;
+            entity.MessageStatus = Entities.Enum.MessageStatus.Failed;
+            _context.Messages.Update(entity);
+            _context.SaveChanges();
+            return Ok("Updated Succesfully!");
         }
     }
 }

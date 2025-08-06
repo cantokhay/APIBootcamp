@@ -1,0 +1,75 @@
+﻿@model List<ResultReservationDTO>
+@{
+    ViewData["Title"] = "ReservationList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int i = 0;
+    int startIndex = 0;
+    int length = 3;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Reservation List</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Reservation Full Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Hour</th>
+                                    <th scope="col">People Count</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.ReservationFullName</td>
+                                        <td>@item.ReservationEmail</td>
+                                        <td>@item.ReservationPhoneNumber</td>
+                                        <td>@item.ReservationDate</td>
+                                        <td>@item.ReservationHour</td>
+                                        <td>@item.ReservationPeopleCount</td>
+                                        <td>@item.ReservationMessage.Substring(startIndex, length)...</td>
+                                        <td>
+                                            @{
+                                                string statusText = item.ReservationStatus switch
+                                                {
+                                                    ReservationStatus.Pending => "Pending",
+                                                    ReservationStatus.Approved => "Approved",
+                                                    ReservationStatus.Rejected => "Rejected",
+                                                    ReservationStatus.Completed => "Completed",
+                                                    _ => "Unknown"
+                                                };
+                                            }
+                                            @statusText
+                                        </td>
+                                        <td><a href="/Reservation/DeleteReservation/@item.Id" class="btn btn-danger">Delete</a></td>
+                                        <td><a href="/Reservation/UpdateReservation/@item.Id" class="btn btn-warning">Update</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <a href="/Reservation/CreateReservation/" class="btn btn-success">Add New One</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

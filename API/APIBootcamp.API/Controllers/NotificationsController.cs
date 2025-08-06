@@ -1,8 +1,8 @@
 ﻿using APIBootcamp.API.Context;
+using APIBootcamp.API.DTOs.MessageDTOs;
 using APIBootcamp.API.DTOs.NotificationDTOs;
 using APIBootcamp.API.Entities.Concrete;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIBootcamp.API.Controllers
@@ -86,32 +86,28 @@ namespace APIBootcamp.API.Controllers
             return Ok(_mapper.Map<List<ResultNotificationDTO>>(entities));
         }
 
-        [HttpPut("ChangeNotificationStatusReadById")]
-        public IActionResult ChangeNotificationStatusReadById(int id)
+        [HttpPut("ChangeNotificationIsReadStatusFromFalseToTrue")]
+        public IActionResult ChangeNotificationIsReadStatusFromFalseToTrue(UpdateNotificationDTO updateNotificationDTO)
         {
-            var entity = _context.Notifications.Find(id);
-            if (entity == null)
-            {
-                return NotFound("Notification not found");
-            }
-            entity.NotificationIsRead = true;
+            var entity = _mapper.Map<Notification>(updateNotificationDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
+            entity.NotificationIsRead = true;
+            _context.Notifications.Update(entity);
             _context.SaveChanges();
-            return Ok("Notification status changed to Read");
+            return Ok("Updated Succesfully!");
         }
 
-        [HttpPut("ChangeNotificationStatusUnReadById")]
-        public IActionResult ChangeNotificationStatusUnReadById(int id)
+        [HttpPut("ChangeNotificationIsReadStatusFromTrueToFalse")]
+        public IActionResult ChangeNotificationIsReadStatusFromTrueToFalse(UpdateNotificationDTO updateNotificationDTO)
         {
-            var entity = _context.Notifications.Find(id);
-            if (entity == null)
-            {
-                return NotFound("Notification not found");
-            }
-            entity.NotificationIsRead = false;
+            var entity = _mapper.Map<Notification>(updateNotificationDTO);
+            entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
+            entity.NotificationIsRead = false;
+            _context.Notifications.Update(entity);
             _context.SaveChanges();
-            return Ok("Notification status changed to UnRead");
+            return Ok("Updated Succesfully!");
         }
     }
 }

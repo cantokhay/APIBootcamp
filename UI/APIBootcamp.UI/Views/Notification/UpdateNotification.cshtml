@@ -1,0 +1,36 @@
+﻿@model UpdateNotificationDTO
+@{
+    ViewData["Title"] = "UpdateNotification";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Update Notification</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="CreatedDate" />
+                            <label>Description</label>
+                            <input type="text" asp-for="NotificationDescription" class="form-control" />
+                            <br />
+                            <label>Image URL</label>
+                            <input type="text" asp-for="NotificationIconURL" class="form-control" />
+                            <br />
+                            <label>Status</label>
+                            <input type="text" disabled asp-for="NotificationIsRead" class="form-control" placeholder="Unread" />
+                            <br />
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

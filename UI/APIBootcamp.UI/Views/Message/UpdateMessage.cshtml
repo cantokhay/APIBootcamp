@@ -1,0 +1,63 @@
+﻿@model UpdateMessageDTO
+@{
+    ViewData["Title"] = "UpdateMessage";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    MessageStatus status = Model.MessageStatus;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Update Reservation</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="CreatedDate" />
+                            <label>Full Name</label>
+                            <input type="text" asp-for="MessageFullName" class="form-control" />
+                            <br />
+                            <label>Email</label>
+                            <input type="text" asp-for="MessageEmail" class="form-control" />
+                            <br />
+                            <label>Subject</label>
+                            <input type="text" asp-for="MessageSubject" class="form-control" />
+                            <br />
+                            <label>Details</label>
+                            <input type="text" asp-for="MessageDetails" class="form-control" />
+                            <br />
+                            <label>Sent Date</label>
+                            <input type="text" disabled asp-for="SentDate" class="form-control" placeholder="dd-mm-yyyy hh:mm:sss" />
+                            <br />
+                            <a href="@Url.Action("ChangeMessageStatusUnRead", "Message", new { id = Model.Id })"
+                               class="btn btn-info @(Model.MessageStatus == MessageStatus.UnRead ? "disabled" : "")"
+                               @(Model.MessageStatus == MessageStatus.UnRead ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to UnRead
+                            </a>
+
+                            <a href="@Url.Action("ChangeMessageStatusRead", "Message", new { id = Model.Id })"
+                               class="btn btn-success @(Model.MessageStatus == MessageStatus.Read ? "disabled" : "")"
+                               @(Model.MessageStatus == MessageStatus.Read ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Read
+                            </a>
+
+                            <a href="@Url.Action("ChangeMessageStatusFailed", "Message", new { id = Model.Id })"
+                               class="btn btn-danger @(Model.MessageStatus == MessageStatus.Failed ? "disabled" : "")"
+                               @(Model.MessageStatus == MessageStatus.Failed ? "tabindex='-1' aria-disabled='true'" : "")>
+                                Set Status to Failed
+                            </a>
+
+                            <br />
+                            <br />
+                            <button type="submit" class="btn btn-lg btn-success">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,5 +1,7 @@
 ﻿using APIBootcamp.API.Context;
+using APIBootcamp.API.DTOs.ImageDTOs;
 using APIBootcamp.API.Entities.Concrete;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,23 +11,26 @@ namespace APIBootcamp.API.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly APIBootcampContext _context;
 
-        public ImagesController(APIBootcampContext context)
+        public ImagesController(APIBootcampContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult ImageList()
         {
             var entitiesList = _context.Images.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).ToList();
-            return Ok(entitiesList);
+            return Ok(_mapper.Map<List<ResultImageDTO>>(entitiesList));
         }
 
         [HttpPost]
-        public IActionResult CreateImage(Image entity)
+        public IActionResult CreateImage(CreateImageDTO createImageDTO)
         {
+            var entity = _mapper.Map<Image>(createImageDTO);
             entity.CreatedDate = DateTime.Now;
             entity.DataStatus = Entities.Enum.DataStatus.Created;
             entity.ModifiedDate = null;
@@ -50,12 +55,13 @@ namespace APIBootcamp.API.Controllers
         public IActionResult GetImageById(int id)
         {
             var entity = _context.Images.Find(id);
-            return Ok(entity);
+            return Ok(_mapper.Map<ResultImageDTO>(entity));
         }
 
         [HttpPut]
-        public IActionResult UpdateImage(Image entity)
+        public IActionResult UpdateImage(UpdateImageDTO updateImageDTO)
         {
+            var entity = _mapper.Map<Image>(updateImageDTO);
             entity.DataStatus = Entities.Enum.DataStatus.Modified;
             entity.ModifiedDate = DateTime.Now;
             _context.Images.Update(entity);
