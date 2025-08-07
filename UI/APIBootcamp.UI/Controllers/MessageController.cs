@@ -1,6 +1,8 @@
 ﻿using APIBootcamp.UI.DTOs.MessageDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
+using static APIBootcamp.UI.Controllers.AIController;
 
 namespace APIBootcamp.UI.Controllers
 {
@@ -132,12 +134,61 @@ namespace APIBootcamp.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AnswerMessagesWithOpenAI(int id)
+        public async Task<IActionResult> AnswerMessagesWithOpenAI(int id, string prompt)
         {
             var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync($"https://localhost:7243/api/Messages/GetMessageById?id={id}");
             var jsonData = await response.Content.ReadAsStringAsync();
             var value = JsonConvert.DeserializeObject<UpdateMessageDTO>(jsonData);
+            prompt = value.MessageDetails;
+
+            var prePrompt = "Create an auto reply to this following customer message : ";
+            var clientAI = new HttpClient();
+            var chatRequest = new ChatRequestModel
+            {
+                Model = "gpt-4o-mini",
+                Messages = new List<Message>
+                {
+                    new Message
+                    {
+                        Role = "user",
+                        Content = prePrompt + prompt
+                    }
+                }
+            };
+
+
+            var json = System.Text.Json.JsonSerializer.Serialize(chatRequest);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/chat"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "56eeaae0a2msh1f5a78362b65e64p1c49efjsn933601bf2799" },
+                    { "x-rapidapi-host", "chatgpt-42.p.rapidapi.com" },
+                },
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            using (var responseAI = await clientAI.SendAsync(request))
+            {
+                responseAI.EnsureSuccessStatusCode();
+                var responseBody = await responseAI.Content.ReadAsStringAsync();
+
+                var result = System.Text.Json.JsonSerializer.Deserialize<ChatResponseModel>(responseBody);
+
+                if (result != null && result.Choices != null && result.Choices.Any())
+                {
+                    ViewBag.Recipe = result.Choices[0].Message.Content;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "AUto reply generation failed. Please try again.";
+                }
+            }
+
             return View(value);
         }
     }
