@@ -17,25 +17,26 @@ namespace APIBootcamp.UI.Controllers
         {
             var prePrompt = "Create a recipe for a dish that includes the following ingredients: ";
             var client = new HttpClient();
-            var chatRequest = new ChatRequest
+            var chatRequest = new ChatRequestModel
             {
-                WebAccess = false,
+                Model = "gpt-4o-mini",
                 Messages = new List<Message>
-                {
-                    new Message
-                    {
-                        Role = "user",
-                        Content = prePrompt + prompt
-                    }
-                }
+        {
+            new Message
+            {
+                Role = "user",
+                Content = prePrompt + prompt
+            }
+        }
             };
+
 
             var json = System.Text.Json.JsonSerializer.Serialize(chatRequest);
 
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/gpt4o"),
+                RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/chat"),
                 Headers =
                 {
                     { "x-rapidapi-key", "56eeaae0a2msh1f5a78362b65e64p1c49efjsn933601bf2799" },
@@ -48,37 +49,48 @@ namespace APIBootcamp.UI.Controllers
             {
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
-                var result = System.Text.Json.JsonSerializer.Deserialize<ReturnViewModel>(responseBody);
-                if (result != null)
+
+                var result = System.Text.Json.JsonSerializer.Deserialize<ChatResponseModel>(responseBody);
+
+                if (result != null && result.Choices != null && result.Choices.Any())
                 {
-                    ViewBag.Recipe = result.Result;
+                    ViewBag.Recipe = result.Choices[0].Message.Content;
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Failed to retrieve recipe. Please try again.";
+                    ViewBag.ErrorMessage = "Recipe generation failed. Please try again.";
                 }
             }
 
             return View();
         }
 
-
-        public class ReturnViewModel
-        {
-            public string Result { get; set; }
-            //public bool Status { get; set; }
-        }
-        public class ChatRequest
-        {
-            public List<Message> Messages { get; set; }
-
-            public bool WebAccess { get; set; }
-        }
-
         public class Message
         {
             public string Role { get; set; }
             public string Content { get; set; }
+        }
+
+        public class ChatRequestModel
+        {
+            public List<Message> Messages { get; set; }
+            public string Model { get; set; }
+        }
+
+        public class ChatChoice
+        {
+            public int Index { get; set; }
+            public string Finish_Reason { get; set; }
+            public Message Message { get; set; }
+        }
+
+        public class ChatResponseModel
+        {
+            public string Id { get; set; }
+            public string Object { get; set; }
+            public long Created { get; set; }
+            public string Model { get; set; }
+            public List<ChatChoice> Choices { get; set; }
         }
     }
 }
