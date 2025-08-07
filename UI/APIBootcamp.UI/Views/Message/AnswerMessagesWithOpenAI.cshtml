@@ -1,0 +1,33 @@
+﻿@model UpdateMessageDTO
+@{
+    ViewData["Title"] = "AnswerMessagesWithOpenAI";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Read and Answer Message by Using OpenAI</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <label>Customer Message</label>
+                            <textarea class="form-control" rows="5" asp-for="MessageDetails" readonly>@Model.MessageDetails</textarea>
+                            <input type="hidden" asp-for="Id" />
+                            <br />
+                            <label>Auto Answer</label>
+                            <textarea class="form-control" rows="10" style="height:200px !important;" readonly></textarea>
+                            <input type="hidden" asp-for="Id" />
+                            <br />
+                            <button class="btn btn-dark">Send Answer to Customer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

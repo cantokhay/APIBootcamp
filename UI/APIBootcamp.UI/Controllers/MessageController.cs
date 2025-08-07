@@ -130,5 +130,15 @@ namespace APIBootcamp.UI.Controllers
             }
             return RedirectToAction("MessageList");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AnswerMessagesWithOpenAI(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7243/api/Messages/GetMessageById?id={id}");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var value = JsonConvert.DeserializeObject<UpdateMessageDTO>(jsonData);
+            return View(value);
+        }
     }
 }

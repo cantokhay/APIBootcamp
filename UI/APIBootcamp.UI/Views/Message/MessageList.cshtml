@@ -23,9 +23,10 @@
                                     <th scope="col">Message Full Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Subject</th>
-                                    <th scope="col">Details</th>
+                                    <th scope="col">Body</th>
                                     <th scope="col">Sent Date</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Details...</th>
                                     <th scope="col">Delete</th>
                                     <th scope="col">Update</th>
                                 </tr>
@@ -54,6 +55,7 @@
                                             }
                                             @statusText
                                         </td>
+                                        <td><a href="/Message/AnswerMessagesWithOpenAI/@item.Id" class="btn btn-info">Details..</a></td>
                                         <td><a href="/Message/DeleteMessage/@item.Id" class="btn btn-danger">Delete</a></td>
                                         <td><a href="/Message/UpdateMessage/@item.Id" class="btn btn-warning">Update</a></td>
                                     </tr>
