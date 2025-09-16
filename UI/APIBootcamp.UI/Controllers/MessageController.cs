@@ -157,7 +157,6 @@ namespace APIBootcamp.UI.Controllers
                 }
             };
 
-
             var json = System.Text.Json.JsonSerializer.Serialize(chatRequest);
 
             var request = new HttpRequestMessage
@@ -185,11 +184,33 @@ namespace APIBootcamp.UI.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "AUto reply generation failed. Please try again.";
+                    ViewBag.ErrorMessage = "Auto reply generation failed. Please try again.";
                 }
             }
 
             return View(value);
+        }
+
+        [HttpGet]
+        public PartialViewResult SendMessage()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(CreateMessageDTO createMessageDTO)
+        {
+            createMessageDTO.MessageStatus = MessageStatus.UnRead;
+            createMessageDTO.SentDate = DateTime.Now;
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(createMessageDTO);
+            var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://localhost:7243/api/Messages", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("MessageList");
+            }
+            return View();
         }
     }
 }

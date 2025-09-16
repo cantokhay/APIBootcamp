@@ -1,0 +1,31 @@
+﻿@model CreateMessageDTO
+
+<form asp-action="SendMessage" asp-controller="Message" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
+    <div class="row gy-4">
+
+        <div class="col-md-6">
+            <input type="text" asp-for="MessageFullName" class="form-control" placeholder="Your Full Name" required="">
+        </div>
+
+        <div class="col-md-6 ">
+            <input type="email" class="form-control" asp-for="MessageEmail" placeholder="Your Email" required="">
+        </div>
+
+        <div class="col-md-12">
+            <input type="text" class="form-control" asp-for="MessageSubject" placeholder="Subject" required="">
+        </div>
+
+        <div class="col-md-12">
+            <textarea class="form-control" asp-for="MessageDetails" rows="6" placeholder="Message" required=""></textarea>
+        </div>
+
+        <div class="col-md-12 text-center">
+@*             <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your message has been sent. Thank you!</div> *@
+
+            <button type="submit">Send Message</button>
+        </div>
+
+    </div>
+</form>

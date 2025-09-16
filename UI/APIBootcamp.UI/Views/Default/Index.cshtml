@@ -16,7 +16,7 @@
         @await Component.InvokeAsync("_FeatureDefaultPartialComponent") <!-- Static -->
 
         @await Component.InvokeAsync("_AboutDefaultPartialComponent") <!-- Static -->
-
+        
         @await Component.InvokeAsync("_ServiceDefaultPartialComponent")
 
         @await Component.InvokeAsync("_StatsDefaultPartialComponent") <!-- Static -->
@@ -24,7 +24,7 @@
         @await Component.InvokeAsync("_MenuDefaultPartialComponent")
 
         @await Component.InvokeAsync("_TestimonialDefaultPartialComponent")
-        
+
         @await Component.InvokeAsync("_EventDefaultPartialComponent")
 
         @await Component.InvokeAsync("_ChefDefaultPartialComponent")
@@ -33,7 +33,20 @@
 
         @await Component.InvokeAsync("_ImagesDefaultPartialComponent")  <!-- Static -->
 
-        @await Component.InvokeAsync("_ContactDefaultPartialComponent") <!-- Static -->
+        <section id="contact" class="contact section">
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Contact</h2>
+                <p><span>Need Help?</span> <span class="description-title">Contact Us</span></p>
+            </div><!-- End Section Title -->
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                @await Component.InvokeAsync("_ContactDefaultPartialComponent") <!-- Static -->
+
+                @await Html.PartialAsync("~/Views/Message/SendMessage.cshtml")
+            </div>
+        </section><!-- /Contact Section -->
 
     </main>
 
