@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json;
 using static APIBootcamp.UI.Controllers.AIController;
 
 namespace APIBootcamp.UI.Controllers
@@ -200,6 +201,38 @@ namespace APIBootcamp.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(CreateMessageDTO createMessageDTO)
         {
+            var huggingFaceClient = new HttpClient();
+            var apiKey = "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";
+            huggingFaceClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+            try
+            {
+                var translateRequestBody = new
+                {
+                    inputs = createMessageDTO.MessageDetails
+                };
+
+                var translateJson = System.Text.Json.JsonSerializer.Serialize(translateRequestBody);
+                var translateContent = new StringContent(translateJson, Encoding.UTF8, "application/json");
+
+                var translateResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/Helsinki-NLP/opus-mt-tr-en", translateContent);
+                var translateResponseString = await translateResponse.Content.ReadAsStringAsync();
+
+                var stringText = createMessageDTO.MessageDetails;
+
+                if (translateResponseString.TrimStart().StartsWith("["))
+                {
+                    var translateDoc = JsonDocument.Parse(translateResponseString);
+                    stringText = translateDoc.RootElement[0].GetProperty("translation_text").GetString();
+                    ViewBag.TranslateText = stringText;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             createMessageDTO.MessageStatus = MessageStatus.UnRead;
             createMessageDTO.SentDate = DateTime.Now;
             var client = _httpClientFactory.CreateClient();
