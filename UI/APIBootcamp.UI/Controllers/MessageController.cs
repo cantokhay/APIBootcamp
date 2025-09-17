@@ -216,7 +216,7 @@ namespace APIBootcamp.UI.Controllers
 
                 var translateJson = System.Text.Json.JsonSerializer.Serialize(translateRequestBody);
                 var translateContent = new StringContent(translateJson, Encoding.UTF8, "application/json");
-                var translateResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/Helsinki-NLP/opus-mt-tr-en", translateContent);
+                var translateResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/tencent/Hunyuan-MT-7B", translateContent);
                 var translateResponseString = await translateResponse.Content.ReadAsStringAsync();
                 var translatedText = createMessageDTO.MessageDetails;
                 if (translateResponseString.TrimStart().StartsWith("["))
@@ -235,7 +235,7 @@ namespace APIBootcamp.UI.Controllers
 
                 var toxicJson = System.Text.Json.JsonSerializer.Serialize(toxicRequestBody);
                 var toxicContent = new StringContent(toxicJson, Encoding.UTF8, "application/json");
-                var toxicResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/unitary/toxic-bert", toxicContent);
+                var toxicResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/j-hartmann/emotion-english-distilroberta-base", toxicContent);
                 var toxicResponseString = await toxicResponse.Content.ReadAsStringAsync();
                 if (translateResponseString.TrimStart().StartsWith("["))
                 {
@@ -257,7 +257,7 @@ namespace APIBootcamp.UI.Controllers
                     createMessageDTO.MessageType = "Non-Toxic";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 createMessageDTO.MessageType = "Waiting...";
                 //throw;
