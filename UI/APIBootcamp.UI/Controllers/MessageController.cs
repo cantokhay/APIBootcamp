@@ -166,7 +166,7 @@ namespace APIBootcamp.UI.Controllers
                 RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/chat"),
                 Headers =
                 {
-                    { "x-rapidapi-key", "56eeaae0a2msh1f5a78362b65e64p1c49efjsn933601bf2799" },
+                    { "x-rapidapi-key", "$" },
                     { "x-rapidapi-host", "chatgpt-42.p.rapidapi.com" },
                 },
                 Content = new StringContent(json, Encoding.UTF8, "application/json")
@@ -205,8 +205,10 @@ namespace APIBootcamp.UI.Controllers
             var apiKey = "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";
             huggingFaceClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
+
             try
             {
+                //Translate
                 var translateRequestBody = new
                 {
                     inputs = createMessageDTO.MessageDetails
@@ -214,23 +216,51 @@ namespace APIBootcamp.UI.Controllers
 
                 var translateJson = System.Text.Json.JsonSerializer.Serialize(translateRequestBody);
                 var translateContent = new StringContent(translateJson, Encoding.UTF8, "application/json");
-
                 var translateResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/Helsinki-NLP/opus-mt-tr-en", translateContent);
                 var translateResponseString = await translateResponse.Content.ReadAsStringAsync();
-
-                var stringText = createMessageDTO.MessageDetails;
-
+                var translatedText = createMessageDTO.MessageDetails;
                 if (translateResponseString.TrimStart().StartsWith("["))
                 {
                     var translateDoc = JsonDocument.Parse(translateResponseString);
-                    stringText = translateDoc.RootElement[0].GetProperty("translation_text").GetString();
-                    ViewBag.TranslateText = stringText;
+                    translatedText = translateDoc.RootElement[0].GetProperty("translation_text").GetString();
+                    ViewBag.TranslateText = translatedText;
+                    createMessageDTO.MessageDetails = translatedText;
+                }
+
+                //Toxic
+                var toxicRequestBody = new
+                {
+                    inputs = translatedText
+                };
+
+                var toxicJson = System.Text.Json.JsonSerializer.Serialize(toxicRequestBody);
+                var toxicContent = new StringContent(toxicJson, Encoding.UTF8, "application/json");
+                var toxicResponse = await huggingFaceClient.PostAsync("https://api-inference.huggingface.com/models/unitary/toxic-bert", toxicContent);
+                var toxicResponseString = await toxicResponse.Content.ReadAsStringAsync();
+                if (translateResponseString.TrimStart().StartsWith("["))
+                {
+                    var toxicDoc = JsonDocument.Parse(toxicResponseString);
+                    foreach (var item in toxicDoc.RootElement.EnumerateArray())
+                    {
+                        var label = item.GetProperty("label").GetString();
+                        var score = item.GetProperty("score").GetDecimal();
+
+                        if(score > 0.5m)
+                        {
+                            createMessageDTO.MessageType = label;
+                            break;
+                        }
+                    }
+                }
+                if(string.IsNullOrEmpty(createMessageDTO.MessageType))
+                {
+                    createMessageDTO.MessageType = "Non-Toxic";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                createMessageDTO.MessageType = "Waiting...";
+                //throw;
             }
 
             createMessageDTO.MessageStatus = MessageStatus.UnRead;
