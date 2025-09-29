@@ -39,7 +39,7 @@ namespace APIBootcamp.UI.Controllers
                 RequestUri = new Uri("https://chatgpt-42.p.rapidapi.com/chat"),
                 Headers =
                 {
-                    { "x-rapidapi-key", "56eeaae0a2msh1f5a78362b65e64p1c49efjsn933601bf2799" },
+                    { "x-rapidapi-key", "" },
                     { "x-rapidapi-host", "chatgpt-42.p.rapidapi.com" },
                 },
                 Content = new StringContent(json, Encoding.UTF8, "application/json")

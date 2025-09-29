@@ -202,7 +202,7 @@ namespace APIBootcamp.UI.Controllers
         public async Task<IActionResult> SendMessage(CreateMessageDTO createMessageDTO)
         {
             var huggingFaceClient = new HttpClient();
-            var apiKey = "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";
+            var apiKey = "$";
             huggingFaceClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
 
