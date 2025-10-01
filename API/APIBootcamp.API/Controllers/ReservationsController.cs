@@ -115,5 +115,34 @@ namespace APIBootcamp.API.Controllers
             _context.SaveChanges();
             return Ok("Updated Succesfully!");
         }
+
+        [HttpGet("GetTotalReservationCount")]
+        public IActionResult GetTotalReservationCount()
+        {
+            var totalCount = _context.Reservations.Count(x => x.DataStatus != Entities.Enum.DataStatus.Deleted);
+            return Ok(totalCount);
+        }
+
+        [HttpGet("GetTotalReservationCustomerCount")]
+        public IActionResult GetTotalReservationCustomerCount()
+        {
+            var totalCustomerCount = _context.Reservations.Where(x => x.DataStatus != Entities.Enum.DataStatus.Deleted).Sum(x => x.ReservationPeopleCount);
+            return Ok(totalCustomerCount);
+        }
+
+        [HttpGet("GetCountByReservationStatusPending")]
+        public IActionResult GetCountByReservationStatusPending()
+        {
+            var totalCountByStatus = _context.Reservations.Count(x => x.DataStatus != Entities.Enum.DataStatus.Deleted && x.ReservationStatus == Entities.Enum.ReservationStatus.Pending);
+            return Ok(totalCountByStatus);
+        }
+
+        [HttpGet("GetCountByReservationStatusApproved")]
+        public IActionResult GetCountByReservationStatusApproved()
+        {
+            var totalCountByStatus = _context.Reservations.Count(x => x.DataStatus != Entities.Enum.DataStatus.Deleted && x.ReservationStatus == Entities.Enum.ReservationStatus.Approved);
+            return Ok(totalCountByStatus);
+        }
+
     }
 }
