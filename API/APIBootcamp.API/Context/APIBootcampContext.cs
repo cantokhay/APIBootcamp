@@ -1,4 +1,5 @@
 ﻿using APIBootcamp.API.Entities.Concrete;
+using APIBootcamp.API.Entities.Relation;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIBootcamp.API.Context
@@ -24,6 +25,8 @@ namespace APIBootcamp.API.Context
         public DbSet<YummyEvent> YummyEvents { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<About> Abouts { get; set; }
+        public DbSet<EmployeeTask> EmployeeTasks { get; set; }
+        public DbSet<EmployeeTaskChef> EmployeeTaskChefs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

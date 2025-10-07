@@ -1,6 +1,7 @@
 ﻿using APIBootcamp.API.DTOs.AboutDTOs;
 using APIBootcamp.API.DTOs.CategoryDTOs;
 using APIBootcamp.API.DTOs.ContactDTOs;
+using APIBootcamp.API.DTOs.EmployeeTaskDTO;
 using APIBootcamp.API.DTOs.FeatureDTOs;
 using APIBootcamp.API.DTOs.ImageDTOs;
 using APIBootcamp.API.DTOs.MessageDTOs;
@@ -68,6 +69,9 @@ namespace APIBootcamp.API.Mapping
             CreateMap<Image, CreateImageDTO>().ReverseMap();
             CreateMap<Image, UpdateImageDTO>().ReverseMap();
 
+            CreateMap<EmployeeTask, ResultEmployeeTaskDTO>().ReverseMap();
+            CreateMap<EmployeeTask, CreateEmployeeTaskDTO>().ReverseMap();
+            CreateMap<EmployeeTask, UpdateEmployeeTaskDTO>().ReverseMap();
 
         }
     }

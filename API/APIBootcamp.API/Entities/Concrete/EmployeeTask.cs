@@ -5,14 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace APIBootcamp.API.Entities.Concrete
 {
-    public class Chef : IGenericEntity<Chef>
+    public class EmployeeTask : IGenericEntity<EmployeeTask>
     {
         [Key]
         public int Id { get; set; }
-        public string ChefFullName { get; set; }
-        public string ChefTitle { get; set; }
-        public string ChefComment { get; set; }
-        public string ChefImageURL { get; set; }
+        public string EmployeeTaskName { get; set; }
+        public byte TaskCompletedRate { get; set; }
+        public DateTime AssignDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public EmployeeTaskPriority EmployeeTaskPriority { get; set; }
+        public EmployeeTaskStatus EmployeeTaskStatus { get; set; }
         public DataStatus DataStatus { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
