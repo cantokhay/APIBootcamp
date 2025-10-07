@@ -6,14 +6,8 @@
         public List<int> Income { get; set; } = new();
         public List<int> Expense { get; set; } = new();
 
-        public decimal WeeklyEarnings { get; set; }
-        public decimal MonthlyEarnings { get; set; }
-        public decimal YearlyEarnings { get; set; }
-
-        public int TotalCustomers { get; set; }
-        public decimal TotalIncome { get; set; }
-        public int ProjectCompleted { get; set; }
-        public decimal TotalExpense { get; set; }
-        public int NewCustomers { get; set; }
+        public int ApprovedResevation { get; set; }
+        public int CancelledReservation { get; set; }
+        public int PendingReservation { get; set; }
     }
 }

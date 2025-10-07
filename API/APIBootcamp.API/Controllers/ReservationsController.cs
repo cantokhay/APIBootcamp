@@ -144,5 +144,29 @@ namespace APIBootcamp.API.Controllers
             return Ok(totalCountByStatus);
         }
 
+        [HttpGet("GetReservationStats")]
+        public IActionResult GetReservationStats()
+        {
+            var dateTimeToday = DateTime.Now;
+            var dateTimeFourMonthsAgo = dateTimeToday.AddMonths(-3);
+
+            var reservations = _context.Reservations
+                .Where(r => r.DataStatus != Entities.Enum.DataStatus.Deleted)
+                .AsEnumerable() // bundan sonra LINQ client-side çalışır
+                .Where(r => r.ReservationDate.ToDateTime(TimeOnly.MinValue) >= dateTimeFourMonthsAgo)
+                .GroupBy(r => new { r.ReservationDate.Month, r.ReservationDate.Year })
+                .Select(g => new ChartReservationDTO
+                {
+                    Month = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"),
+                    Approved = g.Count(x => x.ReservationStatus == Entities.Enum.ReservationStatus.Approved),
+                    Pending = g.Count(x => x.ReservationStatus == Entities.Enum.ReservationStatus.Pending),
+                    Cancelled = g.Count(x => x.ReservationStatus == Entities.Enum.ReservationStatus.Rejected)
+                })
+                .OrderBy(x => x.Month)
+                .ToList();
+
+            return Ok(reservations);
+        }
+
     }
 }
