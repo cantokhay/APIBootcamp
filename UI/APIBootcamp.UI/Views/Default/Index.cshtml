@@ -13,15 +13,78 @@
 
     <main class="main">
 
-        @await Component.InvokeAsync("_FeatureDefaultPartialComponent") <!-- Static -->
+        <!-- Hero Section -->
+        <section id="hero" class="hero section light-background">
 
-        @await Component.InvokeAsync("_AboutDefaultPartialComponent") <!-- Static -->
+            @await Component.InvokeAsync("_FeatureDefaultPartialComponent")
         
-        @await Component.InvokeAsync("_ServiceDefaultPartialComponent")
+        </section><!-- /Hero Section -->
 
-        @await Component.InvokeAsync("_StatsDefaultPartialComponent") <!-- Static -->
+        <!-- About Section -->
+        <section id="about" class="about section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>About Us<br></h2>
+                <p><span>Learn More</span> <span class="description-title">About Us</span></p>
+            </div><!-- End Section Title -->
+            @await Component.InvokeAsync("_AboutDefaultPartialComponent")
+
+        </section><!-- /About Section -->
+
+        <!-- Why Us Section -->
+        <section id="why-us" class="why-us section light-background">
+
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="why-box">
+                            <h3>Why Choose Bootcamp</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
+                            </p>
+                            <div class="text-center">
+                                <a href="#contact" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div><!-- End Why Box -->
+
+                    <div class="col-lg-8 d-flex align-items-stretch">
+                        <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+
+                            @await Component.InvokeAsync("_ServiceDefaultPartialComponent")
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section><!-- /Why Us Section -->
+
+        <!-- Stats Section -->
+        <section id="stats" class="stats section dark-background">
+
+            <img src="/yummy-red-1.0.0/assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
+
+            <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+                
+                @await Component.InvokeAsync("_StatsDefaultPartialComponent")
+
+            </div>
+
+        </section><!-- /Stats Section -->
+
+        <!-- Menu Section -->
+        <section id="menu" class="menu section">
 
         @await Component.InvokeAsync("_MenuDefaultPartialComponent")
+
+        </section><!-- /Menu Section -->
 
         @await Component.InvokeAsync("_TestimonialDefaultPartialComponent")
 
@@ -43,7 +106,6 @@
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
                 @await Component.InvokeAsync("_ContactDefaultPartialComponent") <!-- Static -->
-
                 @await Html.PartialAsync("~/Views/Message/SendMessage.cshtml")
             </div>
         </section><!-- /Contact Section -->

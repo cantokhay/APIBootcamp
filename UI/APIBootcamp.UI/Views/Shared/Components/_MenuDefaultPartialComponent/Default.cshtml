@@ -1,17 +1,11 @@
-﻿        <!-- Menu Section -->
-<section id="menu" class="menu section">
-
+﻿<div class="container">
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Our Menu</h2>
         <p><span>Check Our</span> <span class="description-title">Bootcamp Menu</span></p>
     </div><!-- End Section Title -->
+    @await Component.InvokeAsync("_MenuCategoryDefaultPartialComponent")
 
-    <div class="container">
+    @await Component.InvokeAsync("_MenuProductDefaultPartialComponent")
 
-        @await Component.InvokeAsync("_MenuCategoryDefaultPartialComponent")
-        @await Component.InvokeAsync("_MenuProductDefaultPartialComponent")
-
-    </div>
-
-</section><!-- /Menu Section -->
+</div>
